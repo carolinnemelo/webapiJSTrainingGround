@@ -5,6 +5,7 @@ const fileNameOfUrl = (url: string) => {
 	let fileName = "";
 	if (url.split("/")[1] === "") {
 		fileName = "index.html";
+        console.log(fileName)
 	} else {
 		fileName = url.split("/")[1];
 	}
@@ -17,8 +18,8 @@ const server = http.createServer(
 		console.log(`The URL for the request was '${req.url}'`);
 		console.log(`The METHOD for the request was '${req.method}'`);
 
-        const fileName = fileNameOfUrl(req.url);
-		const content = fs.readFileSync("./static/index.html", "utf-8");
+        const fileName = req.url ? fileNameOfUrl(req.url): 'index.html';
+		const content = fs.readFileSync(`./static/${fileName}`, "utf-8");
 
 		res.statusCode = 200;
 		res.setHeader("Content-Type", "text/html");

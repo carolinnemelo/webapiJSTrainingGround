@@ -3,18 +3,18 @@ import express, { Response, Request } from "express";
 
 const app = express();
 
+const db = [
+	{
+		id: 1,
+		name: "Marcus Dev",
+		email: "marcus@salt.dev",
+	},
+];
 
-app.get("/", (req: Request, res: Response) => {
-    const user = {
-        id: 1,
-        name: "Marcus",
-        email: "marcus@salt.dev",
-        cv: "I've been coding since last week. Take me in"
-    }
-    res
-        .status(201)
-        .setHeader("location", `/api/developers/1`)
-        .json(user)
+app.get("/api/developers", (req: Request, res: Response) => {
+	res
+    .status(200)
+    .json(db);
 });
 
 const port = 3000;

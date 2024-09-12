@@ -1,7 +1,14 @@
 
-import express, { Request, Response} from "express";
+import express, { Request, Response, NextFunction } from "express";
 
 const app = express();
+
+const saltLogger = function (req: Request, res: Response, next: NextFunction) {
+	console.log(`salt> ${req.method} - ${req.url}`);
+	next();
+};
+
+app.use(saltLogger);
 app.use(express.static("static"));
 
 app.get("/", (req: Request, res: Response) => {

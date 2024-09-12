@@ -9,12 +9,24 @@ const db = [
 		name: "Marcus Dev",
 		email: "marcus@salt.dev",
 	},
+	{
+		id: 2,
+		name: "Carolinne",
+		email: "carolinne.melo@blabla.com",
+	},
 ];
 
 app.get("/api/developers", (req: Request, res: Response) => {
 	res
     .status(200)
     .json(db);
+});
+
+app.get("/api/developers/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const devById = db.find(e => e.id === id);
+    res.send(devById)
+    return; 
 });
 
 const port = 3000;

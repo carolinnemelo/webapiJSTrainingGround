@@ -6,8 +6,6 @@ const app = express();
 
 app.use(morgan('tiny'));
 
-// app.use(express.static("static"));
-
 app.get("/", (req: Request, res: Response) => {
 	res.send("Salt");
 });

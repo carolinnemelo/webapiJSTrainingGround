@@ -22,16 +22,11 @@ app.get("/api/developers", (req: Request, res: Response) => {
     .json(db);
 });
 
-app.get("/api/developers/:id", (req, res) => {
+app.get("/api/developers/:id/:name/:address", (req, res) => {
     const id = Number(req.params.id);
     const devById = db.find(e => e.id === id);
-    if (!devById) {
-        res.status(404).end();
-        return
-    }
-    res.json(devById);
-    return; 
 
+    return devById ? res.status(404).end() : res.json(devById);
 
 });
 

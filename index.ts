@@ -28,7 +28,7 @@ app.get("/api/developers", (req: Request, res: Response) => {
 	res.status(200).json(db);
 });
 
-app.get("/api/developers/:id/:name/:address", (req, res) => {
+app.get("/api/developers/:id/", (req, res) => {
 	const id = Number(req.params.id);
 	const devById = db.find((e) => e.id === id);
 

@@ -25,8 +25,14 @@ app.get("/api/developers", (req: Request, res: Response) => {
 app.get("/api/developers/:id", (req, res) => {
     const id = Number(req.params.id);
     const devById = db.find(e => e.id === id);
-    res.send(devById)
+    if (!devById) {
+        res.status(404).end();
+        return
+    }
+    res.json(devById);
     return; 
+
+
 });
 
 const port = 3000;

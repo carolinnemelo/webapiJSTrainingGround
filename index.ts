@@ -40,10 +40,15 @@ app.post("/api/developers/", (req, res) => {
 
 	if (!name) {
 		res.status(400).send("Name is required");
+        return;
 	} else if (!email) {
 		res.status(400).send("Email is required");
+        return;
 	} else if (db.find((dev) => dev.name === name || dev.email === email)) {
-		res.send(`already exist`);
+		res
+        .status(409)//Conflict
+        .send(`Developer with the same name or email already exists`);
+        
 	} else {
 		const newDev: Developer = {
 			id: db.length + 1,

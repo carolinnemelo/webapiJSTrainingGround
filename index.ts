@@ -44,6 +44,31 @@ app.post("/api/developers/", (req, res) => {
 		.json(newDev);
 });
 
+
+app.patch("/api/developers/:id", (req, res) => {
+	const id = Number(req.params.id);
+	const devById = db.find((e) => e.id === id);
+	if (!devById) {
+		res.status(404).end();
+
+	} else {
+        if (req.body.name){
+            devById.name = req.body.name;
+        }
+
+        if(req.body.email) {
+            devById.email = req.body.email;
+        }
+
+        console.log(devById)
+        
+        res
+            .status(201)
+            .setHeader("location", `/api/developers/${devById.id}`)
+            .json(devById);
+    }
+});
+
 app.delete("/api/developers/:id", (req, res) => {
 	const id = Number(req.params.id);
 	const devById = db.find((e) => e.id === id);

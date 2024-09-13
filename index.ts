@@ -3,7 +3,13 @@ import express, { Response, Request } from "express";
 
 const app = express();
 
-const db = [
+type Developer = {
+	id: number;
+	name: string;
+	email: string;
+};
+
+const db: Developer[] = [
 	{
 		id: 1,
 		name: "Marcus Dev",
@@ -30,18 +36,28 @@ app.get("/api/developers/:id/:name/:address", (req, res) => {
 });
 
 app.post("/api/developers/", (req, res) => {
-	const newDev = {
-		id: db.length + 1,
-		name: req.body.name,
-		email: req.body.email,
-	};
+	const { name, email } = req.body;
 
-	db.push(newDev);
+	if (!name) {
+		res.status(400).send("Name is required");
+	} else if (!email) {
+		res.status(400).send("Email is required");
+	} else if (db.find((dev) => dev.name === name || dev.email === email)) {
+		res.send(`already exist`);
+	} else {
+		const newDev: Developer = {
+			id: db.length + 1,
+			name: req.body.name,
+			email: req.body.email,
+		};
 
-	res
-		.status(201)
-		.setHeader("location", `/api/developers/${newDev.id}`)
-		.json(newDev);
+		db.push(newDev);
+
+		res
+			.status(201)
+			.setHeader("location", `/api/developers/${newDev.id}`)
+			.json(newDev);
+	}
 });
 
 

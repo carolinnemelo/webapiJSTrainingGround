@@ -43,4 +43,16 @@ describe("developer API should have endpoints to", () => {
 			.expect(201, done);
 	});
   
+
+    it("delete developer", (done) => {
+        //act and assert
+        request(app)
+            .delete("/api/developers/2")
+            .expect(204)
+            .end(() => {
+                console.log(db);
+                done();
+            });
+	});
+
 });

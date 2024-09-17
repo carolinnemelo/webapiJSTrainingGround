@@ -28,4 +28,19 @@ describe("developer API should have endpoints to", () => {
       })
       .expect(200, done);
   });
+
+  it("add developer", (done) => {
+		//act and assert
+		request(app)
+			.post("/api/developers")
+			.set("Accept", "application/json")
+			.send({ name: "Jolene", email: "jolene@jolene.com" })
+			.expect("Content-Type", /json/)
+			.expect("location", /\api\/developers\//)
+			.expect((res) => {
+				assert.strictEqual(res.body.name, "Jolene");
+			})
+			.expect(201, done);
+	});
+  
 });
